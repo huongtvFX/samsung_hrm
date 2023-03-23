@@ -86,7 +86,6 @@ CREATE TABLE `employees` (
   `department_id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `salary` float DEFAULT NULL,
   `income_tax` float DEFAULT NULL,
-  `position_name` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`employees_id`),
   KEY `FK_Employees_Department` (`department_id`),
   CONSTRAINT `FK_Employees_Department` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`)
