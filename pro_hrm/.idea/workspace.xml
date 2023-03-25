@@ -4,23 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="30800bac-26dd-4f6b-991b-b2bd8cdb8e15" name="Changes" comment="database update 22/03/2023">
-      <change afterPath="$PROJECT_DIR$/src/main/java/program/Main.java" afterDir="false" />
+    <list default="true" id="30800bac-26dd-4f6b-991b-b2bd8cdb8e15" name="Changes" comment="update 26/03/2023">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/connection/MySQLConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/connection/Connect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/AccountDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/AccountDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/DepartmentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/DepartmentDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/EmployeesDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/EmployeesDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Department.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Department.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Employees.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Employees.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/DepartmentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/DepartmentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/EmployeesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/EmployeesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/dao/DepartmentDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/DepartmentDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/dao/EmployeesDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dao/EmployeesDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Account.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Department.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Department.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/Employees.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Employees.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/service/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/AccountService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/service/DepartmentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/DepartmentService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/service/EmployeesService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/EmployeesService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,10 +25,16 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -56,33 +55,117 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;xpath.settings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "xpath.settings"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="connection" />
+      <recent name="model" />
+    </key>
   </component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="program.Main" />
+  <component name="RunManager" selected="JUnit.ConnectTest">
+    <configuration name="AccountTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="pro_hrm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="model" />
+      <option name="MAIN_CLASS_NAME" value="model.AccountTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AccountTest.createAccount3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="pro_hrm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="model" />
+      <option name="MAIN_CLASS_NAME" value="model.AccountTest" />
+      <option name="METHOD_NAME" value="createAccount3" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AccountTest.createAccount4" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="pro_hrm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="model" />
+      <option name="MAIN_CLASS_NAME" value="model.AccountTest" />
+      <option name="METHOD_NAME" value="createAccount4" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConnectTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="pro_hrm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="connection.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="connection" />
+      <option name="MAIN_CLASS_NAME" value="connection.ConnectTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ConnectTest.getConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="pro_hrm" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="connection.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="connection" />
+      <option name="MAIN_CLASS_NAME" value="connection.ConnectTest" />
+      <option name="METHOD_NAME" value="getConnectionTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.ConnectTest" />
+        <item itemvalue="JUnit.ConnectTest.getConnectionTest" />
+        <item itemvalue="JUnit.AccountTest" />
+        <item itemvalue="JUnit.AccountTest.createAccount4" />
+        <item itemvalue="JUnit.AccountTest.createAccount3" />
       </list>
     </recent_temporary>
   </component>
@@ -214,7 +297,21 @@
       <option name="project" value="LOCAL" />
       <updated>1679423574429</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="update 26/03/2023">
+      <created>1679769802903</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1679769802903</updated>
+    </task>
+    <task id="LOCAL-00019" summary="update 26/03/2023">
+      <created>1679769855377</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1679769855377</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -234,7 +331,8 @@
     <MESSAGE value="update fuction Main" />
     <MESSAGE value="update" />
     <MESSAGE value="database update 22/03/2023" />
-    <option name="LAST_COMMIT_MESSAGE" value="database update 22/03/2023" />
+    <MESSAGE value="update 26/03/2023" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 26/03/2023" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -255,5 +353,25 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/pro_hrm$AccountTest.ic" NAME="AccountTest Coverage Results" MODIFIED="1679772429395" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/pro_hrm$AccountTest_createAccount.ic" NAME="AccountTest.createAccount Coverage Results" MODIFIED="1679771872377" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/pro_hrm$AccountTest_createAccount2.ic" NAME="AccountTest.createAccount2 Coverage Results" MODIFIED="1679771962423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/pro_hrm$AccountTest_usernameDefault.ic" NAME="AccountTest.usernameDefault Coverage Results" MODIFIED="1679772255110" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/pro_hrm$AccountTest_createAccount1.ic" NAME="AccountTest.createAccount1 Coverage Results" MODIFIED="1679771897449" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/pro_hrm$ConnectTest_getConnectionTest.ic" NAME="ConnectTest.getConnectionTest Coverage Results" MODIFIED="1679774388057" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>connection.*</FILTER>
+    </SUITE>
   </component>
 </project>
