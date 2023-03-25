@@ -1,7 +1,7 @@
 package dao;
 
-import connection.MySQLConnection;
-import model.Account;
+import common.Constants;
+import connection.Connect;
 import model.Department;
 
 import java.sql.Connection;
@@ -10,155 +10,154 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DepartmentDao {
-    public static boolean checkDepartmentName(String departmentNameCompare){
+    public static boolean existDepartment(String departmentNameCompare) {
         boolean check = false;
         try {
-            Connection conn = MySQLConnection.getConnection();
+            Connection conn = Connect.getConnection();
             String sql = String.format("SELECT department_name FROM department");
             Statement stsm = conn.createStatement();
             ResultSet rs = stsm.executeQuery(sql);
             String department_name = "";
-            while (rs.next()){
-                department_name = rs.getString("department_name");
-                if(department_name.equals(departmentNameCompare)){
+            while (rs.next()) {
+                department_name = rs.getString(Constants.DEPARTMENT_NAME);
+                if (department_name.equals(departmentNameCompare)) {
                     check = true;
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return  check;
+        return check;
     }
-    public static void createDepartment(Department department) {
+
+    public static void create(Department department) {
         try {
-            if(checkDepartmentName(department.getDepartment_name())){
-                System.out.println("Tên phòng ban đã tồn tại!");
-            }
-            else if(!checkPhone(department.getPhone())){
-                System.out.println("Số điện thoại không đúng định dạng!");
-            }
-            else{
-                Connection conn = MySQLConnection.getConnection();
+            if (existDepartment(department.getDepartment_name())) {
+                System.out.println("Department name already exists!");
+            } else if (!Constants.isPhone(department.getPhone())) {
+                System.out.println("Invalid phone number!");
+            } else {
+                Connection conn = Connect.getConnection();
                 String sql = String.format("INSERT IGNORE INTO department VALUES ('%s','%s','%s')",
-                        department.getDepartment_id(), department.getDepartment_name(),department.getPhone());
+                        department.getDepartment_id(), department.getDepartment_name(), department.getPhone());
                 Statement stsm = conn.createStatement();
                 int rs = stsm.executeUpdate(sql);
-                System.out.println(rs == 0 ? "Không thể tạo phòng ban!" : "Tạo phòng ban thành công!");
+                System.out.println(rs == 0 ? Constants.CREATE_FAILED : Constants.CREATE_SUCCESS);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public static boolean isCheckDepartment(String departmentName) {
+
+    public static boolean checkDepartmentNameBeforeUpdate(String departmentName) {
         boolean isDepartment = false;
-        try{
-            Connection conn = MySQLConnection.getConnection();
-            String sql = String.format("SELECT * FROM department WHERE department_name = '%s'",departmentName);
+        try {
+            Connection conn = Connect.getConnection();
+            String sql = String.format("SELECT * FROM department WHERE department_name = '%s'", departmentName);
             Statement stsm = conn.createStatement();
             ResultSet rs = stsm.executeQuery(sql);
-            String name = "";
-            if (rs.next()){
-                name = rs.getString("department_name");
+            String name = Constants.EMPTY;
+            if (rs.next()) {
+                name = rs.getString(Constants.DEPARTMENT_NAME);
             }
             isDepartment = name.toUpperCase().equals(departmentName.toUpperCase()) ? true : false;
             rs.close();
             stsm.close();
             conn.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return isDepartment;
     }
-    public static UUID getIdDepartment(String departmentName){
+
+    public static UUID getIdByName(String departmentName) {
         UUID department_id = null;
         try {
-            Connection conn = MySQLConnection.getConnection();
-            Statement stsm = conn.createStatement();
+            Connection conn = Connect.getConnection();
+            Statement state = conn.createStatement();
             String sql_get_id = String.format("SELECT department_id FROM department WHERE department_name = '%s'", departmentName);
-            ResultSet rs = stsm.executeQuery(sql_get_id);
+            ResultSet rs = state.executeQuery(sql_get_id);
 
             if (rs.next()) {
-                department_id = UUID.fromString(rs.getString("department_id"));
+                department_id = UUID.fromString(rs.getString(Constants.DEPARTMENT_ID));
             }
             rs.close();
-            stsm.close();
+            state.close();
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return department_id;
     }
-    public static void updateDepartment(String result[]){
+
+    public static void update(String name, String result[]) {
         try {
-            if (!DepartmentDao.isCheckDepartment(result[0])) {
-                System.out.println("Không tồn tại Department " + result[0]);
-            }
-            else {
-                UUID department_id = getIdDepartment(result[0]);
-                Connection conn = MySQLConnection.getConnection();
-                String sql = String.format("UPDATE department SET department_name = '%s', phone = '%s' WHERE `department_id` = '%s'",
-                        result[1],result[2],department_id);
-                Statement stsm = conn.createStatement();
-                int rs = stsm.executeUpdate(sql);
-                System.out.println((rs == 0) ? "Cập nhật phòng ban không thành công!" : "Cập nhật phòng ban thành công!");
-            }
-        }catch (Exception e) {
+            UUID department_id = getIdByName(name);
+            Connection conn = Connect.getConnection();
+            String sql = String.format("UPDATE department SET department_name = '%s', phone = '%s' WHERE `department_id` = '%s'",
+                    result[0], result[1], department_id);
+            Statement stsm = conn.createStatement();
+            int rs = stsm.executeUpdate(sql);
+            System.out.println((rs == 0) ? Constants.UPDATE_FAILED : Constants.UPDATE_SUCCESS);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    public static void deleteDepartment(String departmentName){
-        UUID department_id = getIdDepartment(departmentName);
+
+    public static void delete(String departmentName) {
+        UUID department_id = getIdByName(departmentName);
         try {
-            Connection conn = MySQLConnection.getConnection();
-            String sql = String.format("DELETE FROM `department` WHERE `department_id` = '%s'", department_id);;
+            Connection conn = Connect.getConnection();
+            String sql = String.format("DELETE FROM `department` WHERE `department_id` = '%s'", department_id);
+            ;
             Statement stsm = conn.createStatement();
             int rs = stsm.executeUpdate(sql);
-            System.out.println((rs == 0) ? "Delete unsuccessful!" : "Delete successful!");
+            System.out.println((rs == 0) ? Constants.DELETE_FAILED : Constants.DELETE_SUCCESS);
             stsm.close();
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public static List<Department> getAllDepartment() {
-            List<Department> departmentList = new ArrayList<>();
+
+    public static List<Department> getAll() {
+        List<Department> departmentList = new ArrayList<>();
         try {
-            Connection conn = MySQLConnection.getConnection();
+            Connection conn = Connect.getConnection();
             String sql = "SELECT * FROM `department`";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Department department = new Department();
-                department.setDepartment_name(rs.getString("department_name"));
+                department.setDepartment_name(rs.getString(Constants.DEPARTMENT_NAME));
                 department.setPhone(rs.getString("phone"));
                 departmentList.add(department);
             }
             rs.close();
             stmt.close();
             conn.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return departmentList;
     }
-    public static List<Department> searchDepartment(String departmentName) {
+
+    public static List<Department> search(String departmentName) {
         List<Department> list = new ArrayList<>();
         try {
-            Connection conn = MySQLConnection.getConnection();
+            Connection conn = Connect.getConnection();
             String sql = "SELECT * FROM `department`";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                String name = rs.getString("department_name");
-                if(name.toLowerCase().contains(departmentName.toLowerCase())){
+                String name = rs.getString(Constants.DEPARTMENT_NAME);
+                if (name.toLowerCase().contains(departmentName.toLowerCase())) {
                     Department department = new Department();
-                    department.setDepartment_name(rs.getString("department_name"));
+                    department.setDepartment_name(rs.getString(Constants.DEPARTMENT_NAME));
                     department.setPhone(rs.getString("phone"));
                     list.add(department);
                 }
@@ -166,16 +165,48 @@ public class DepartmentDao {
             rs.close();
             stmt.close();
             conn.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
     }
-    public static boolean checkPhone(String phone){
-        String regex = "(84|0[2|3|5|7|8|9])+([0-9]{8})\\b";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(phone);
-        return matcher.matches();
+
+    public static List<String> getListOfDepartments() {
+        List<String> departmentNameList = new ArrayList<>();
+        try {
+            Connection conn = Connect.getConnection();
+            Statement state = conn.createStatement();
+            String sql = "SELECT department_name FROM department";
+            ResultSet rs = state.executeQuery(sql);
+            while (rs.next()) {
+                departmentNameList.add(rs.getString(Constants.DEPARTMENT_NAME));
+            }
+            rs.close();
+            state.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return departmentNameList;
     }
 
+    public static String GetDepartmentNameById(UUID department_id) {
+        String department_name = Constants.EMPTY;
+        try {
+            Connection conn = Connect.getConnection();
+            String sql = String.format("SELECT department_name FROM `department` WHERE `department_id` = '%s'", department_id);
+            ;
+            Statement state = conn.createStatement();
+            ResultSet rs = state.executeQuery(sql);
+            if (rs.next()) {
+                department_name = rs.getString(Constants.DEPARTMENT_NAME);
+            }
+            rs.close();
+            state.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return department_name;
+    }
 }

@@ -14,6 +14,7 @@ public class Employees {
     private UUID department_id;
     private Float salary;
     private Float income_tax;
+
     public Employees() {
     }
 
@@ -30,85 +31,92 @@ public class Employees {
         this.salary = salary;
         this.income_tax = income_tax;
     }
+
     public UUID getEmployees_id() {
         return employees_id;
     }
+
     public void setEmployees_id(UUID employees_id) {
         this.employees_id = employees_id;
     }
+
     public String getFull_name() {
         return full_name;
     }
+
     public void setFull_name(String full_name) {
         this.full_name = full_name;
     }
+
     public String getEthnicity() {
         return ethnicity;
     }
+
     public void setEthnicity(String ethnicity) {
         this.ethnicity = ethnicity;
     }
+
     public String getGender() {
         return gender;
     }
+
     public void setGender(String gender) {
         this.gender = gender;
     }
+
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
+
     public String getDate_of_birth() {
         return date_of_birth;
     }
+
     public void setDate_of_birth(String date_of_birth) {
         this.date_of_birth = date_of_birth;
     }
+
     public String getPhone() {
         return phone;
     }
+
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public UUID getDepartment_id() {
         return department_id;
     }
+
     public void setDepartment_id(UUID department_id) {
         this.department_id = department_id;
     }
+
     public Float getSalary() {
         return salary;
     }
+
     public void setSalary(Float salary) {
         this.salary = salary;
-    }    public Float getIncome_tax() {
+    }
+
+    public Float getIncome_tax() {
         return income_tax;
     }
+
     public void setIncome_tax(Float income_tax) {
         this.income_tax = income_tax;
-    }
-    @Override
-    public String toString() {
-        return "Employees{" +
-                "employees_id=" + employees_id +
-                ", full_name='" + full_name + '\'' +
-                ", ethnicity='" + ethnicity + '\'' +
-                ", gender='" + gender + '\'' +
-                ", address='" + address + '\'' +
-                ", date_of_birth='" + date_of_birth + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", department_id=" + department_id +
-                ", salary=" + salary +
-                ", income_tax=" + income_tax +
-                '}';
     }
 }

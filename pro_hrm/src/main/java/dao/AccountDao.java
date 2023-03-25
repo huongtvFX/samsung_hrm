@@ -1,7 +1,7 @@
-//region Thư viện cần import
 package dao;
 
-import connection.MySQLConnection;
+import common.Constants;
+import connection.Connect;
 import model.Account;
 
 import java.sql.Connection;
@@ -9,78 +9,59 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-//endregion
 
 public class AccountDao {
-
-    //region lấy password theo username được nhập vào
-    public static String getPasswordHash(String[] infoAccount) {
-        String pass = "";
+    public static String getPasswordHash(Account account) {
+        String password_hash = Constants.EMPTY;
         try {
-            Connection conn = MySQLConnection.getConnection();
-            String sql = String.format("SELECT password_hash FROM account WHERE BINARY username = '%s'", infoAccount[0]);
-            Statement stmt = conn.createStatement();
-            ResultSet rSet = stmt.executeQuery(sql);
-
+            Connection conn = Connect.getConnection();
+            String sql = String.format("SELECT password_hash FROM account WHERE BINARY username = '%s'", account.getUsername());
+            Statement state = conn.createStatement();
+            ResultSet rSet = state.executeQuery(sql);
             while (rSet.next()) {
-                pass = rSet.getString("password_hash");
+                password_hash = rSet.getString(Constants.PASSWORD_HASH);
             }
             rSet.close();
-            stmt.close();
+            state.close();
             conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return pass;
+        return password_hash;
     }
-    //endregion
 
-    //region get info permission
-    public static String getPermission(String[] infoAccount) {
-        String permission = "";
+    public static String getPermission(Account account) {
+        String permission = Constants.EMPTY;
         try {
-            Connection conn = MySQLConnection.getConnection();
-            String sql = String.format("SELECT `permission` FROM `account` WHERE `username` = '%s' AND `password_hash` = '%s'",
-                    infoAccount[0], infoAccount[1]);
+            Connection conn = Connect.getConnection();
+            String sql = String.format("SELECT `permission` FROM `account` WHERE `username` = '%s' AND `password_hash` = '%s'", account.getUsername(), account.getPassword());
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                permission = rs.getString("permission");
+                permission = rs.getString(Constants.PERMISSION);
             }
             rs.close();
             stmt.close();
             conn.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return permission;
     }
-    //endregion
 
-    //region check email and create account
-    public static boolean isEmail(String email){
-        String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"+ "samsungsds.com";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-    public static void checkBeforeCreate(Account account) {
+    public static void create(Account account) {
         try {
-            if(!isEmail(account.getUsername())){
+            if (!Constants.isEmail(account.getUsername())) {
                 System.out.println("Username not email format!");
-                System.out.println("Account creation failed!");
-            }
-            else{
-                Connection conn = MySQLConnection.getConnection();
-                String sql = String.format("INSERT IGNORE INTO account VALUES ('%s','%s','%s','%s')",
-                        account.getAccount_id(), account.getUsername(), account.getPassword(), account.getPermission());
+                System.out.println(Constants.CREATE_FAILED);
+            } else {
+                Connection conn = Connect.getConnection();
+                String sql = String.format("INSERT IGNORE INTO account VALUES ('%s','%s','%s','%s')", account.getAccount_id(), account.getUsername(), account.getPassword(), account.getPermission());
                 Statement stsm = conn.createStatement();
                 int rs = stsm.executeUpdate(sql);
-                System.out.println((rs == 0) ? "Create unsuccessful" : "Create successful");
+                System.out.println((rs == 0) ? Constants.CREATE_FAILED : Constants.CREATE_SUCCESS);
                 stsm.close();
                 conn.close();
             }
@@ -88,19 +69,17 @@ public class AccountDao {
             e.printStackTrace();
         }
     }
-    //endregion
 
-    //region check account
-    public static boolean isExistAccount(String username) {
+    public static boolean existAccount(String username) {
         boolean isAccount = false;
         try {
-            Connection conn = MySQLConnection.getConnection();
-            String sql =  String.format("SELECT * FROM account WHERE username = '%s'", username);
+            Connection conn = Connect.getConnection();
+            String sql = String.format("SELECT * FROM account WHERE username = '%s'", username);
             Statement state = conn.createStatement();
             ResultSet rs = state.executeQuery(sql);
             String name = "";
             if (rs.next()) {
-                name = rs.getString("username");
+                name = rs.getString(Constants.USERNAME);
             }
             isAccount = name.equals(username) ? true : false;
             rs.close();
@@ -111,36 +90,27 @@ public class AccountDao {
         }
         return isAccount;
     }
-    //endregion
 
-    //region update account
-    public static void update(String[] result) {
+    public static void update(String name, String[] result) {
         try {
-            if(!AccountDao.isExistAccount(result[0])){
-                System.out.println("Tài khoản không tồn tại!");
-            }
-            else{
-                String account_id = getId(result[0]);
-                Connection conn = MySQLConnection.getConnection();
-                Statement stsm = conn.createStatement();
-                String sql = String.format("UPDATE account SET username = '%s', password_hash = '%s', permission = '%s' WHERE `account_id` = '%s'",
-                        result[1], result[2], result[3], account_id);
-                int rs = stsm.executeUpdate(sql);
-                System.out.println((rs == 0) ? "Cập nhật không thành công!" : "Cập nhật thành công!");
-                stsm.close();
-                conn.close();
-            }
+            String account_id = getIdByName(name);
+            Connection conn = Connect.getConnection();
+            Statement state = conn.createStatement();
+            String sql = String.format("UPDATE account SET username = '%s', password_hash = '%s', permission = '%s' WHERE `account_id` = '%s'",
+                    result[0], result[1], result[2], account_id);
+            int rs = state.executeUpdate(sql);
+            System.out.println((rs == 0) ? Constants.UPDATE_FAILED : Constants.UPDATE_SUCCESS);
+            state.close();
+            conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    //endregion
 
-    //region lấy ra account id theo username
-    public static String getId(String username){
-        String account_id = "";
+    public static String getIdByName(String username) {
+        String account_id = Constants.EMPTY;
         try {
-            Connection conn = MySQLConnection.getConnection();
+            Connection conn = Connect.getConnection();
             Statement stsm = conn.createStatement();
             String sql_get_id = String.format("SELECT account_id FROM account WHERE username = '%s'", username);
             ResultSet rSet = stsm.executeQuery(sql_get_id);
@@ -156,21 +126,19 @@ public class AccountDao {
         }
         return account_id;
     }
-    //endregion
 
-    //region Delete account
-    public static void deleteAccount(String username){
-        if(username.equals("TranVanHuongSDS@gmail.com")){
-            System.out.println("Không thể xóa tài khoản admin!");
-        }
-        else{
-            String account_id = getId(username);
+    public static void delete(String username) {
+        if (username.equals(Constants.EMAIL_ADMIN)) {
+            System.out.println("Can't delete admin account!");
+        } else {
+            String account_id = getIdByName(username);
             try {
-                Connection conn = MySQLConnection.getConnection();
-                String sql = String.format("DELETE FROM `account` WHERE account_id = '%s'", account_id);;
+                Connection conn = Connect.getConnection();
+                String sql = String.format("DELETE FROM `account` WHERE account_id = '%s'", account_id);
+                ;
                 Statement stsm = conn.createStatement();
                 int rs = stsm.executeUpdate(sql);
-                System.out.println((rs == 0) ? "Delete unsuccessful!" : "Delete successful!");
+                System.out.println((rs == 0) ? Constants.DELETE_FAILED : Constants.DELETE_SUCCESS);
                 stsm.close();
                 conn.close();
             } catch (Exception e) {
@@ -178,29 +146,26 @@ public class AccountDao {
             }
         }
     }
-    //endregion
 
-    //region get all info
-    public static List<Account> getAllAccount() {
+    public static List<Account> getAll() {
         List<Account> accountList = new ArrayList<>();
         try {
-            Connection conn = MySQLConnection.getConnection();
+            Connection conn = Connect.getConnection();
             String sql = "SELECT * FROM `account`";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Account account = new Account();
-                account.setUsername(rs.getString("username"));
-                account.setPermission(rs.getString("permission"));
+                account.setUsername(rs.getString(Constants.USERNAME));
+                account.setPermission(rs.getString(Constants.PERMISSION));
                 accountList.add(account);
             }
             rs.close();
             stmt.close();
             conn.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return accountList;
     }
-    //endregion
 }
