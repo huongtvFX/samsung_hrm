@@ -107,15 +107,34 @@ public class DepartmentDao {
 
     }
 
+    public static void RemoveAllEmpByDepartmentID(UUID id){
+        try {
+            Connection conn = Connect.getConnection();
+            String sql = String.format("SELECT * FROM `employees` WHERE `department_id` = '%s'", id);
+            Statement stsm = conn.createStatement();
+            ResultSet rs = stsm.executeQuery(sql);
+            while (rs.next()){
+                EmployeesDao.removeEmpFromDepartment(rs.getString("email"));
+            }
+            stsm.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static void delete(String departmentName) {
         UUID department_id = getIdByName(departmentName);
+        RemoveAllEmpByDepartmentID(department_id);
         try {
             Connection conn = Connect.getConnection();
             String sql = String.format("DELETE FROM `department` WHERE `department_id` = '%s'", department_id);
-            ;
             Statement stsm = conn.createStatement();
             int rs = stsm.executeUpdate(sql);
-            System.out.println((rs == 0) ? Constants.DELETE_FAILED : Constants.DELETE_SUCCESS);
+            if(rs == 0){
+                System.out.println(Constants.DELETE_FAILED);
+            }else{
+                System.out.println(Constants.DELETE_SUCCESS);
+            }
             stsm.close();
             conn.close();
         } catch (Exception e) {

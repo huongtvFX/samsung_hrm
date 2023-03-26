@@ -135,7 +135,6 @@ public class AccountDao {
             try {
                 Connection conn = Connect.getConnection();
                 String sql = String.format("DELETE FROM `account` WHERE account_id = '%s'", account_id);
-                ;
                 Statement stsm = conn.createStatement();
                 int rs = stsm.executeUpdate(sql);
                 System.out.println((rs == 0) ? Constants.DELETE_FAILED : Constants.DELETE_SUCCESS);

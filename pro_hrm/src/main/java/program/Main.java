@@ -71,7 +71,12 @@ public class Main {
                                     break;
                                 case "7":
                                     System.out.print("Enter the name of the department you want to delete: ");
-                                    DepartmentService.delete(scanner.nextLine());
+                                    String name = scanner.nextLine();
+                                    if (!DepartmentDao.checkDepartmentNameBeforeUpdate(name)) {
+                                        System.out.println("There is no department " + name);
+                                    } else {
+                                        DepartmentService.delete(name);
+                                    }
                                     break;
                                 case "8":
                                     List<Department> list = DepartmentService.getAll();
@@ -79,11 +84,11 @@ public class Main {
                                     break;
                                 case "9":
                                     System.out.print("Enter the name of the department you want to search: ");
-                                    String name = scanner.nextLine();
-                                    if (!DepartmentDao.checkDepartmentNameBeforeUpdate(name)) {
-                                        System.out.println("There is no department " + name);
+                                    String name1 = scanner.nextLine();
+                                    if (!DepartmentDao.checkDepartmentNameBeforeUpdate(name1)) {
+                                        System.out.println("There is no department " + name1);
                                     } else {
-                                        List<Department> lstDepartment = DepartmentService.search(name);
+                                        List<Department> lstDepartment = DepartmentService.search(name1);
                                         ShowDepartment(lstDepartment);
                                     }
                                     break;
